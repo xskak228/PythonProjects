@@ -2,12 +2,11 @@
 import sqlite3
 import sys
 
-from PyQt5 import uic, Qt
-from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QFileDialog, QVBoxLayout, QScrollArea, QCheckBox, \
-    QRadioButton, QDialog
-from PyQt5.QtWidgets import QMainWindow, QLabel
 import requests
-
+from PyQt5 import uic
+from PyQt5.QtWidgets import QApplication, QWidget, QFileDialog, QVBoxLayout, QCheckBox, \
+    QRadioButton, QDialog, QMessageBox
+from PyQt5.QtWidgets import QMainWindow
 
 # path of file "settings"
 path_settings = 'settings.cfg'
@@ -105,15 +104,17 @@ class Create_SetUP(QDialog):
         # staff
         self.all_chb = []  # all checkBox
         self.result = []   # result db
+        self.c = False
+        # ____
+        self.ussr = []
+        self.usa = []
+        self.germ = []
 
-        # func.
-        self.create()
-
-        # func. change nation
-        self.nations.activated.connect(self.change_nationTOchb)
-
-        # func. rbtn
-        self.rbtn_all.toggled.connect(lambda state: self.chaked_all(state))
+        # functions
+        self.create()   # func.
+        self.nations.activated.connect(self.change_nationToCHB)                 # func. change nation
+        self.rbtn_all.toggled.connect(lambda state: self.chaked_all(state))     # func. rbtn
+        self.btn_N.clicked.connect(self.save_nationToSetup)        # func. save nation to SetUp
 
     # make all CHB chacked
     def chaked_all(self, state):
@@ -143,31 +144,66 @@ class Create_SetUP(QDialog):
         self.scrollArea_3.setWidget(self.widget)
 
     # change nation on CHB and rename his
-    def change_nationTOchb(self):
-        # make all CHB anChacked
+    def change_nationToCHB(self):
+        # update all CHB
         for i in self.all_chb:
+            i.setVisible(False)
             i.setChecked(False)
 
         # connect to DB
         con = sqlite3.connect(path_standartDB)
         cur = con.cursor()
 
+
         # choose nations
         if self.nations.currentText() == "Не выбрано":
-            for i in self.all_chb:  # make CHB anVisible
+            for i in self.all_chb:
                 i.setVisible(False)
+                i.setChecked(False)
+            self.c = False
         elif self.nations.currentText() == "Германия":
-            self.result = cur.execute("""SELECT * FROM GERMANY_tanks ORDER BY id;""").fetchall()  # take all "GERMANY tanks
+            self.result = cur.execute("""SELECT name FROM GERMANY_tanks ORDER BY id;""").fetchall()  # take all "GERMANY tanks
+            self.c = True
         elif self.nations.currentText() == "СССР":
-            self.result = cur.execute("""SELECT * FROM USSR_tanks ORDER BY id;""").fetchall()  # take all "USSR" tanks
+            self.result = cur.execute("""SELECT name FROM USSR_tanks ORDER BY id;""").fetchall()  # take all "USSR" tanks
+            self.c = True
         elif self.nations.currentText() == "США":
-            self.result = cur.execute("""SELECT * FROM USA_tanks ORDER BY id;""").fetchall()  # take all "USA" tanks
+            self.result = cur.execute("""SELECT name FROM USA_tanks ORDER BY id;""").fetchall()  # take all "USA" tanks
+            self.c = True
 
         # rename CHB
-        self.rbtn_all.setVisible(True)  # make rbtn Visible
-        for key, i in enumerate(self.all_chb[1:len(self.result) + 1]):
-            i.setVisible(True)  # make CHB Visible
-            i.setText(str(self.result[key][1]))
+        if self.c:
+            self.rbtn_all.setVisible(True)  # make rbtn Visible
+            for key, i in enumerate(self.all_chb[1:len(self.result) + 1]):
+                i.setVisible(True)  # make CHB Visible
+                i.setText(str(self.result[key][0]))
+
+    # save nation to 1/3 SetUp'a
+    def save_nationToSetup(self):
+        # ____
+        self.ussr = []
+        self.usa = []
+        self.germ = []
+
+        # add tanks
+        if self.nations.currentText() == "СССР":
+            for i in self.all_chb[1:]:
+                if i.isChecked() == True:
+                    self.ussr.append(i.text())
+            print(self.ussr) if DebugMod else print()  # debug
+        elif self.nations.currentText() == "Германия":
+            for i in self.all_chb[1:]:
+                if i.isChecked() == True:
+                    self.germ.append(i.text())
+            print(self.germ) if DebugMod else print()  # debug
+        elif self.nations.currentText() == "США":
+            for i in self.all_chb[1:]:
+                if i.isChecked() == True:
+                    self.usa.append(i.text())
+            print(self.usa) if DebugMod else print()  # debug
+
+
+
 
 
 # Settings
@@ -236,13 +272,54 @@ class Settings_Form(QDialog):
 
     def Download_DB(self):
         global path_standartDB
+        global path_settings
 
-        print("class Settings > def Download_DB  -  download...") if DebugMod else print()
-        f = open(r'DB/standart_DBWTR.db', "wb")
-        ufr = requests.get("https://github.com/xskak228/cfg/blob/main/test_DB.db?raw=true")
-        f.write(ufr.content)
-        print("class Settings > def Download_DB  -  success download!") if DebugMod else print()
-        f.close()
+        print("class Settings > def Download_DB  -  download...") if DebugMod else print()              # debug
+
+        # try downLoad file
+        try:
+            f = open(r'DB/standart_DBWTR.db', "wb")     # create file
+            ufr = requests.get("https://github.com/xskak228/cfg/blob/main/test_DB.db?raw=true")     # download file
+            f.write(ufr.content)    # write to file
+            f.close()
+
+            # update path
+            path_standartDB = 'DB/standart_DBWTR.db'
+
+            print("class Settings > def Download_DB  -  success download!") if DebugMod else print()  # debug
+
+            # success message
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("Успешное скачивание!")
+            msg.setWindowTitle("Успех")
+            msg.exec_()
+
+            # change path
+            file = open(path_settings, encoding="utf-8")
+            lines = file.read().splitlines()
+            file.close()
+
+            self.Path_standartBD.setText(str(path_standartDB))  # change path
+
+            # open settings
+            file = open(path_settings, encoding="utf-8", mode="w")
+            lines.pop(2)  # delate previous path
+            lines.insert(2, path_standartDB)  # insert new path
+            for i in lines:
+                print(i, file=file)
+            print("class Settings_Form > def Download_DB  -  settings changes") if DebugMod else print()  # debug
+            file.close()
+        except Exception:
+            print("ERROR! class Settings > def Download_DB  -  download Failed")
+            # failed message
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Непредвиденная ошибка!")
+            msg.setInformativeText('Проверьте подключение к Интернету')
+            msg.setWindowTitle("Ошибка")
+            msg.exec_()
+
 
 
 if __name__ == '__main__':
