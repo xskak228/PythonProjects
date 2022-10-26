@@ -14,7 +14,7 @@
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>5</x>
@@ -114,7 +114,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
-        <widget class="QRadioButton" name="radioButton_3">
+        <widget class="QCheckBox" name="checkBox_3">
          <property name="text">
           <string>Премимуи техн.</string>
          </property>
@@ -124,7 +124,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QRadioButton" name="radioButton_4">
+        <widget class="QCheckBox" name="checkBox_4">
          <property name="text">
           <string>Полковая техн.</string>
          </property>
