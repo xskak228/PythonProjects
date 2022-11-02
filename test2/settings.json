@@ -1,0 +1,11 @@
+{
+  "path": "C:\windows\system32",
+  "array": [
+    "hello",
+    "world"
+  ],
+  "group": {
+    "name_1": [1, 2, 3],
+    "name_2": [1, 2, 3]
+  }
+}

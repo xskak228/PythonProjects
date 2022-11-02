@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="667e2175-6530-46c4-89f8-37ddcb16caba" name="Changes" comment="" />
+    <list default="true" id="667e2175-6530-46c4-89f8-37ddcb16caba" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DB/standart_DBWTR.db" beforeDir="false" afterPath="$PROJECT_DIR$/DB/standart_DBWTR.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UI/SettingsForm.ui" beforeDir="false" afterPath="$PROJECT_DIR$/UI/SettingsForm.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UI/createSetUP.ui" beforeDir="false" afterPath="$PROJECT_DIR$/UI/createSetUP.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/UI/test228.ui" beforeDir="false" afterPath="$PROJECT_DIR$/UI/test228.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/settings.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -158,5 +167,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

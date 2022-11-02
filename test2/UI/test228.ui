@@ -6,12 +6,16 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>295</width>
-    <height>385</height>
+    <width>228</width>
+    <height>391</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(25, 0, 97);
+color: rgb(255, 255, 255);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="layoutWidget">
@@ -19,7 +23,7 @@
      <rect>
       <x>5</x>
       <y>10</y>
-      <width>288</width>
+      <width>216</width>
       <height>341</height>
      </rect>
     </property>
@@ -29,8 +33,20 @@
      </property>
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
-        <widget class="QLabel" name="label_nat">
+        <widget class="QLabel" name="nation">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -52,9 +68,28 @@
         </widget>
        </item>
        <item>
-        <widget class="QComboBox" name="p1_nations">
+        <widget class="QComboBox" name="nations">
          <property name="enabled">
           <bool>true</bool>
+         </property>
+         <property name="minimumSize">
+          <size>
+           <width>20</width>
+           <height>0</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>101</width>
+           <height>16777215</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(53, 0, 211);
+border-radius: 3px;
+padding: 1px 18px 1px 3px;
+min-width: 6em;
+</string>
          </property>
          <property name="editable">
           <bool>false</bool>
@@ -97,6 +132,9 @@
      </item>
      <item>
       <widget class="Line" name="line">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(36, 0, 144)</string>
+       </property>
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
@@ -114,9 +152,14 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_4">
        <item>
-        <widget class="QCheckBox" name="checkBox_3">
+        <widget class="QCheckBox" name="chb_primet">
+         <property name="styleSheet">
+          <string notr="true">background-color:rgb(36, 0, 144);
+padding: 2px;
+padding-left: 5px;</string>
+         </property>
          <property name="text">
-          <string>Премимуи техн.</string>
+          <string>Премиум техн.</string>
          </property>
          <property name="autoExclusive">
           <bool>false</bool>
@@ -124,7 +167,12 @@
         </widget>
        </item>
        <item>
-        <widget class="QCheckBox" name="checkBox_4">
+        <widget class="QCheckBox" name="chb_polkt">
+         <property name="styleSheet">
+          <string notr="true">background-color:rgb(36, 0, 144);
+padding: 2px;
+padding-left: 5px;</string>
+         </property>
          <property name="text">
           <string>Полковая техн.</string>
          </property>
@@ -142,11 +190,14 @@
        </property>
        <item>
         <widget class="QScrollArea" name="scrollArea">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="frameShape">
-          <enum>QFrame::Box</enum>
+          <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
+          <enum>QFrame::Sunken</enum>
          </property>
          <property name="lineWidth">
           <number>1</number>
@@ -159,62 +210,108 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>140</width>
+            <width>104</width>
             <height>226</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_2">
            <item>
-            <widget class="QRadioButton" name="radioButton">
+            <widget class="QRadioButton" name="rbtn_lvl_all">
+             <property name="layoutDirection">
+              <enum>Qt::LeftToRight</enum>
+             </property>
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color:rgb(36, 0, 144);
+padding: 2px;
+padding-left: 5px;</string>
+             </property>
              <property name="text">
               <string>ВСЕ</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox">
+            <widget class="QCheckBox" name="chb_lvl_1">
+             <property name="styleSheet">
+              <string notr="true">background-color:rgb(36, 0, 144);
+padding: 2px;
+padding-left: 5px;</string>
+             </property>
              <property name="text">
               <string>I</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_2">
+            <widget class="QCheckBox" name="chb_lvl_2">
+             <property name="styleSheet">
+              <string notr="true">background-color:rgb(36, 0, 144);
+padding: 2px;
+padding-left: 5px;</string>
+             </property>
              <property name="text">
               <string>II</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_3">
+            <widget class="QCheckBox" name="chb_lvl_3">
+             <property name="styleSheet">
+              <string notr="true">background-color:rgb(36, 0, 144);
+padding: 2px;
+padding-left: 5px;</string>
+             </property>
              <property name="text">
               <string>III</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_4">
+            <widget class="QCheckBox" name="chb_lvl_4">
+             <property name="styleSheet">
+              <string notr="true">background-color:rgb(36, 0, 144);
+padding: 2px;
+padding-left: 5px;</string>
+             </property>
              <property name="text">
               <string>IV</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_5">
+            <widget class="QCheckBox" name="chb_lvl_5">
+             <property name="styleSheet">
+              <string notr="true">background-color:rgb(36, 0, 144);
+padding: 2px;
+padding-left: 5px;</string>
+             </property>
              <property name="text">
               <string>V</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_6">
+            <widget class="QCheckBox" name="chb_lvl_6">
+             <property name="styleSheet">
+              <string notr="true">background-color:rgb(36, 0, 144);
+padding: 2px;
+padding-left: 5px;</string>
+             </property>
              <property name="text">
               <string>VI</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_7">
+            <widget class="QCheckBox" name="chb_lvl_7">
+             <property name="styleSheet">
+              <string notr="true">background-color:rgb(36, 0, 144);
+padding: 2px;
+padding-left: 5px;</string>
+             </property>
              <property name="text">
               <string>VII</string>
              </property>
@@ -226,8 +323,11 @@
        </item>
        <item>
         <widget class="QScrollArea" name="scrollArea_2">
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
          <property name="frameShape">
-          <enum>QFrame::Box</enum>
+          <enum>QFrame::StyledPanel</enum>
          </property>
          <property name="frameShadow">
           <enum>QFrame::Plain</enum>
@@ -240,62 +340,102 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>140</width>
+            <width>104</width>
             <height>226</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <widget class="QRadioButton" name="radioButton_2">
+            <widget class="QRadioButton" name="rbtn_type_all">
+             <property name="styleSheet">
+              <string notr="true">background-color:rgb(36, 0, 144);
+padding: 2px;
+padding-left: 5px;</string>
+             </property>
              <property name="text">
               <string>ВСЕ</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_8">
+            <widget class="QCheckBox" name="chb_type_lt">
+             <property name="styleSheet">
+              <string notr="true">background-color:rgb(36, 0, 144);
+padding: 2px;
+padding-left: 5px;</string>
+             </property>
              <property name="text">
               <string>ЛТ</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_9">
+            <widget class="QCheckBox" name="chb_type_st">
+             <property name="styleSheet">
+              <string notr="true">background-color:rgb(36, 0, 144);
+padding: 2px;
+padding-left: 5px;</string>
+             </property>
              <property name="text">
               <string>СТ</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_10">
+            <widget class="QCheckBox" name="chb_type_tt">
+             <property name="styleSheet">
+              <string notr="true">background-color:rgb(36, 0, 144);
+padding: 2px;
+padding-left: 5px;</string>
+             </property>
              <property name="text">
               <string>ТТ</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_11">
+            <widget class="QCheckBox" name="chb_type_ptsay">
+             <property name="styleSheet">
+              <string notr="true">background-color:rgb(36, 0, 144);
+padding: 2px;
+padding-left: 5px;</string>
+             </property>
              <property name="text">
               <string>ПТ-САУ</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_12">
+            <widget class="QCheckBox" name="chb_type_it">
+             <property name="styleSheet">
+              <string notr="true">background-color:rgb(36, 0, 144);
+padding: 2px;
+padding-left: 5px;</string>
+             </property>
              <property name="text">
               <string>ИТ</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_13">
+            <widget class="QCheckBox" name="chb_type_zsu">
+             <property name="styleSheet">
+              <string notr="true">background-color:rgb(36, 0, 144);
+padding: 2px;
+padding-left: 5px;</string>
+             </property>
              <property name="text">
               <string>ЗСУ</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QCheckBox" name="checkBox_14">
+            <widget class="QCheckBox" name="chb_type_zprk_zrk">
+             <property name="styleSheet">
+              <string notr="true">background-color:rgb(36, 0, 144);
+padding: 2px;
+padding-left: 5px;</string>
+             </property>
              <property name="text">
               <string>ЗПРК - ЗРК</string>
              </property>
@@ -310,25 +450,58 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
-        <widget class="QPushButton" name="pushButton">
+        <widget class="QPushButton" name="btn_random">
          <property name="minimumSize">
           <size>
            <width>0</width>
            <height>25</height>
           </size>
          </property>
+         <property name="styleSheet">
+          <string notr="true">background-color: rgb(53, 0, 211);
+border-width: 2px;
+border-radius: 10px;
+</string>
+         </property>
          <property name="text">
-          <string>START</string>
+          <string>СТАРТ</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QSpinBox" name="p1_numb">
+        <widget class="QSpinBox" name="numb">
          <property name="maximumSize">
           <size>
            <width>40</width>
            <height>16777215</height>
           </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">background-color:rgb(53, 0, 211);</string>
+         </property>
+         <property name="wrapping">
+          <bool>false</bool>
+         </property>
+         <property name="frame">
+          <bool>true</bool>
+         </property>
+         <property name="readOnly">
+          <bool>false</bool>
+         </property>
+         <property name="accelerated">
+          <bool>false</bool>
+         </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>9</number>
+         </property>
+         <property name="stepType">
+          <enum>QAbstractSpinBox::DefaultStepType</enum>
+         </property>
+         <property name="displayIntegerBase">
+          <number>10</number>
          </property>
         </widget>
        </item>
@@ -336,6 +509,9 @@
      </item>
      <item>
       <widget class="Line" name="line_2">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(36, 0, 144)</string>
+       </property>
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
@@ -358,16 +534,26 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>295</width>
+     <width>228</width>
      <height>21</height>
     </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>16777212</width>
+     <height>16777215</height>
+    </size>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::DefaultContextMenu</enum>
+   </property>
+   <property name="acceptDrops">
+    <bool>false</bool>
    </property>
    <widget class="QMenu" name="file_menu">
     <property name="title">
      <string>&amp;Файл</string>
     </property>
-    <addaction name="ach_save"/>
-    <addaction name="ach_load"/>
     <addaction name="separator"/>
     <addaction name="ach_create_setup"/>
     <addaction name="ach_load_setup"/>

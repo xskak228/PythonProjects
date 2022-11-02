@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>230</width>
-    <height>311</height>
+    <width>228</width>
+    <height>343</height>
    </rect>
   </property>
   <property name="maximumSize">
@@ -22,6 +22,10 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(25, 0, 97);
+color: rgb(255, 255, 255);</string>
+  </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
   </property>
@@ -32,9 +36,9 @@
    <property name="geometry">
     <rect>
      <x>5</x>
-     <y>0</y>
-     <width>221</width>
-     <height>305</height>
+     <y>10</y>
+     <width>216</width>
+     <height>281</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -66,6 +70,25 @@
        <widget class="QComboBox" name="nations">
         <property name="enabled">
          <bool>true</bool>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>101</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>101</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(53, 0, 211);
+border-radius: 3px;
+padding: 1px 18px 1px 3px;
+min-width: 6em;
+</string>
         </property>
         <property name="editable">
          <bool>false</bool>
@@ -108,11 +131,22 @@
     </item>
     <item>
      <widget class="QScrollArea" name="scrollArea_3">
+      <property name="styleSheet">
+       <string notr="true">QScrollBar:horizontal {
+    background: #282828;
+}</string>
+      </property>
       <property name="frameShape">
-       <enum>QFrame::Box</enum>
+       <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Plain</enum>
+      </property>
+      <property name="verticalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
+      </property>
+      <property name="horizontalScrollBarPolicy">
+       <enum>Qt::ScrollBarAlwaysOff</enum>
       </property>
       <property name="widgetResizable">
        <bool>true</bool>
@@ -122,8 +156,8 @@
         <rect>
          <x>0</x>
          <y>0</y>
-         <width>217</width>
-         <height>194</height>
+         <width>212</width>
+         <height>193</height>
         </rect>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_5"/>
@@ -152,24 +186,28 @@
      </layout>
     </item>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
-      <item>
-       <widget class="QPushButton" name="btn_N">
-        <property name="text">
-         <string>Сохранить Нацию</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="btn_saveAll">
-        <property name="text">
-         <string>Сохранить Все</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
+     <layout class="QHBoxLayout" name="horizontalLayout_3"/>
     </item>
    </layout>
+  </widget>
+  <widget class="QPushButton" name="btn_saveAll">
+   <property name="geometry">
+    <rect>
+     <x>5</x>
+     <y>295</y>
+     <width>216</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(53, 0, 211);
+border-width: 2px;
+border-radius: 10px;
+</string>
+   </property>
+   <property name="text">
+    <string>Сохранить Все</string>
+   </property>
   </widget>
  </widget>
  <resources/>
