@@ -23,8 +23,7 @@
    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Показвать ТипТехники(ЛТ, СТ...) БР(1.0, 2.7...) ЛВЛ(1, 2, 3...)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(25, 0, 97);
-color: rgb(255, 255, 255);</string>
+   <string notr="true"/>
   </property>
   <widget class="QToolButton" name="tBtn_StandartDB">
    <property name="geometry">
@@ -36,7 +35,7 @@ color: rgb(255, 255, 255);</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(53, 0, 211);</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>...</string>
@@ -101,8 +100,7 @@ color: rgb(255, 255, 255);</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(53, 0, 211)
-</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>...</string>
@@ -121,7 +119,7 @@ color: rgb(255, 255, 255);</string>
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Отображать флаги при выборе нации.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:rgb(36, 0, 144)</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>Отображать Флаги?</string>
@@ -137,10 +135,7 @@ color: rgb(255, 255, 255);</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(53, 0, 211);
-border-width: 2px;
-border-radius: 10px;
-</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>Скачать ДБ</string>
@@ -156,42 +151,23 @@ border-radius: 10px;
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color:rgb(36, 0, 144)</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>Показывать больше информации в &quot;Создать SetUP&quot;?</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btn_theme">
+  <widget class="QCheckBox" name="chb_theme">
    <property name="geometry">
     <rect>
-     <x>270</x>
-     <y>165</y>
-     <width>36</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-color: rgb(53, 0, 211);
-border-width: 2px;
-border-radius: 10px;
-</string>
-   </property>
-   <property name="text">
-    <string>Тема</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="l_theme">
-   <property name="geometry">
-    <rect>
-     <x>315</x>
-     <y>165</y>
-     <width>16</width>
-     <height>21</height>
+     <x>5</x>
+     <y>105</y>
+     <width>91</width>
+     <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>TextLabel</string>
+    <string>Темная Тема</string>
    </property>
   </widget>
  </widget>

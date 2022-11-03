@@ -1,62 +1,63 @@
 # -*- coding: utf-8 -*-
 
+import datetime
+import json
 import os
 import random
 import sqlite3
 import sys
-import datetime
 
 from pyqt5_plugins.examplebuttonplugin import QtGui
 
-now = datetime.datetime.now()
+now = datetime.datetime.now()   # time
 
 import requests
 from PyQt5.QtGui import QPixmap
 from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QWidget, QFileDialog, QVBoxLayout, QCheckBox, \
-    QRadioButton, QDialog, QMessageBox, QHBoxLayout, QPushButton, QLabel
+    QRadioButton, QDialog, QMessageBox, QLabel
 from PyQt5.QtWidgets import QMainWindow
-from random import randrange
 
 # ______SETTINGS__________
 # path of file "settings"
-path_settings = 'settings.cfg'
-# open settings
-f = open(path_settings, encoding="utf-8")
-lines = f.read().splitlines()
-# path if DB
-path_standartDB = lines[2]  # path of standart DB
-path_SetUP_file = lines[4]  # path of SetUP fi
-# path of UI
-MainWindow_path = lines[8]  # path MainWindow_path
-CreateSetup_path = lines[10]  # path CreateSetup_path
-SettingsForm_path = lines[12]  # path SettingsForm_path
-# flags
-doFlags = True if lines[16] == "1" else False
-# do More Informathion in CreateSetUP(BR, type, lvl...)
-doMoreInf = True if lines[18] == "1" else False
-# FilterSave
-PrimeT = True if lines[24] == "1" else False
-PolkT = True if lines[26] == "1" else False
-LVL_T = [True if i == "1" else False for i in lines[28][1:-1].split(", ")]
-TYPE_T = [True if i == "1" else False for i in lines[30][1:-1].split(", ")]
-# kol Tech
-KolT = int(lines[32])
-# Nathions
-Nath = lines[34]
+path_settings = 'settings.json'
+# open settings.json
+with open(path_settings) as f:
+    data = json.load(f)
+    # DB path
+    path_standartDB = data["standartDB_path"]  # path of standartDB
+    path_SetUP_file = data["SetUP_path"]  # path of SetUP
+    # path of UI
+    MainWindow_path = data["UI_MainWindow_path"]  # path MainWindow_path
+    CreateSetup_path = data["UI_CreateSetup_path"]  # path CreateSetup_path
+    SettingsForm_path = data["UI_SettingsForm_path"]  # path SettingsForm_path
+    ResultForm_path = data["UI_ResultForm_path"]  # path ResultForm_path
+    # other settings
+    doFlags = True if data["Flags"] else False  # show flags?
+    doMoreInf = True if data["MoreInf"] else False  # show MoreInformathion(create Setup)
+    DebugMod = True if data["Debug"] else False  # debug mode
+    # filters
+    PrimeT = True if data["PrimeT"] else False  # RBTN Prime
+    PolkT = True if data["PolkT"] else False  # RBTN Polk
+    LVL_T = [True if i else False for i in data["LVL"]]  # all CHB LVL
+    TYPE_T = [True if i else False for i in data["TYPE"]]  # all CHB TTPE
+    KolT = int(data["Number"])  # number of techn
+    Nath = data["Nation"]  # nation
+    # theme
+    DarkTheme = True if data["Theme"] else False    # do dark theme on?
+
 
 # logs mod
 log_file = open('Logs/' + str(now.strftime("%d-%m-%Y_%H-%M")) + ".txt", "w+")  # create logfile with TimeName
 log_file.close()
 log_file_path = 'Logs/' + str(now.strftime("%d-%m-%Y_%H-%M")) + ".txt"  # path of last log'a
 
-with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log
+# write in log
+with open(log_file_path, "a", encoding="utf-8") as log_file:
     print(str("Start program - " + str(now)), file=log_file)
 
-# debug mod
-DebugMod = True if lines[20] == "1" else False
-f.close()  # cose file
-print("DebugMod  -  True") if DebugMod else print("DebugMod  -  False")  # debug
+# debug
+print("DebugMod  -  True") if DebugMod else print("DebugMod  -  False")
 
 # write in log
 with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log
@@ -68,31 +69,22 @@ with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log
 if not os.path.exists(path_standartDB):
 
     try:
-        f = open(r'DB/standart_DBWTR.db', "wb")  # create file
-        ufr = requests.get("https://github.com/xskak228/WTR/blob/main/standart_DBWTR.db?raw=true")  # download file
-        f.write(ufr.content)  # write to file
-        f.close()
+        with open(path_settings) as f:
+            data = json.load(f)
+            f = open(r'DB/standart_DBWTR.db', "wb")  # create file
+            ufr = requests.get(data["GitHubLink_standartDB"])  # download file
+            f.write(ufr.content)  # write to file
+            f.close()
 
         # update path
         path_standartDB = 'DB/standart_DBWTR.db'
 
-        print("Main  -  file'standart DB' success download!") if DebugMod else print()  # debug
+        # debug
+        print("Main  -  file'standart DB' success download!") if DebugMod else print()
 
         # write in log
         with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log
             print("Main  -  file'standart DB' success download!", file=log_file)  # log
-
-        # change path
-        file = open(path_settings, encoding="utf-8")
-        lines = file.read().splitlines()
-        file.close()
-
-        # open settings
-        file = open(path_settings, encoding="utf-8", mode="w")
-        lines.pop(2)  # delate previous path
-        lines.insert(2, path_standartDB)  # insert new path
-        for i in lines:
-            print(i, file=file)
 
         # debug
         print("Main  -  settings changes") if DebugMod else print()
@@ -101,7 +93,13 @@ if not os.path.exists(path_standartDB):
         with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log
             print("Main  -  settings changes", file=log_file)  # log
 
-        file.close()
+        # update path of StandartDB in Settings
+        with open(path_settings) as s:
+            data = json.load(s)
+            data["standartDB_path"] = path_standartDB
+            with open(path_settings, "w") as s:
+                json.dump(data, s, indent=4)
+
     except Exception:
         # debug
         print("ERROR! Main  -  download Failed") if DebugMod else print()
@@ -115,16 +113,8 @@ if not os.path.exists(path_standartDB):
 class MainProgramm(QMainWindow):
     def __init__(self):
         super().__init__()
-        # mainwindow
-        self.setWindowIcon(QtGui.QIcon("DB/image/logo.png"))
+        # global
         global MainWindow_path
-        uic.loadUi(MainWindow_path, self)
-        self.setWindowTitle('WTR_2.1')
-
-        self.menubar.setStyleSheet("QMenuBar::item:selected {background: #3500d3;}"
-                                   "QMenu::item:selected {background: #3500d3;}")
-
-        # files
         global path_standartDB  # path of standart DB
         global path_SetUP_file  # path of SetUP fi
         global log_file
@@ -134,6 +124,35 @@ class MainProgramm(QMainWindow):
         global PolkT
         global KolT
         global Nath
+
+        # styleWindow
+        # load logo
+        with open(path_settings) as f:
+            data = json.load(f)
+            self.setWindowIcon(QtGui.QIcon(data["logo_path"]))
+        # Ui
+        uic.loadUi(MainWindow_path, self)
+        self.setWindowTitle('WTR_2.1 AlfaTest')
+
+        # theme
+        if DarkTheme:
+            self.menubar.setStyleSheet("QMenuBar::item:selected {background: #3500d3;}"
+                                       "QMenu::item:selected {background: #3500d3;}"
+                                       )
+            self.setStyleSheet("background-color: rgb(25, 0, 97); color: rgb(255, 255, 255);")
+            for i in [self.rbtn_lvl_all, self.chb_lvl_1, self.chb_lvl_2, self.chb_lvl_3,
+                      self.chb_lvl_4, self.chb_lvl_5, self.chb_lvl_6, self.chb_lvl_7,
+                      self.rbtn_type_all, self.chb_type_lt, self.chb_type_st, self.chb_type_tt,
+                      self.chb_type_ptsay, self.chb_type_it, self.chb_type_zsu, self.chb_type_zprk_zrk,
+                      self.chb_polkt, self.chb_primet]:
+                i.setStyleSheet("background-color: rgb(36, 0, 144);"
+                                " padding: 2px;"
+                                " padding-left: 5px;")
+            self.btn_random.setStyleSheet("background-color: rgb(53, 0, 211);" "border-width: 2px;" "border-radius: 10px;")
+            self.nations.setStyleSheet(
+                "background-color: rgb(53, 0, 211);" "border-radius: 3px;" "padding: 1px 18px 1px 3px;" "min-width: 6em;")
+            self.numb.setStyleSheet("background-color:rgb(53, 0, 211);")
+            for i in [self.line, self.line_2]: i.setStyleSheet("background-color: rgb(36, 0, 144)")
 
         # lists
         self.all_LVL = [self.rbtn_lvl_all, self.chb_lvl_1, self.chb_lvl_2, self.chb_lvl_3,
@@ -154,38 +173,46 @@ class MainProgramm(QMainWindow):
         self.ach_create_setup.triggered.connect(self.open_CreateForm)  # crate SetUP venichle
         self.ach_load_setup.triggered.connect(self.open_LoadDialog)  # load SetUP venichle
         self.ach_settings.triggered.connect(self.open_SettingsForm)  # settings form
-        self.rbtn_lvl_all.toggled.connect(lambda state: self.chacked_all(state, "LVL"))     # chacked all CHB(LVL)
-        self.rbtn_type_all.toggled.connect(lambda state: self.chacked_all(state, "TYPE"))   # chacked all CHB(TYPE)
-        self.btn_random.clicked.connect(self.Random)    # func random
+        self.rbtn_lvl_all.toggled.connect(lambda state: self.chacked_all(state, "LVL"))  # chacked all CHB(LVL)
+        self.rbtn_type_all.toggled.connect(lambda state: self.chacked_all(state, "TYPE"))  # chacked all CHB(TYPE)
+        self.btn_random.clicked.connect(self.Random)  # func random
         self.nations.activated.connect(self.changeNation)
-        self.changeNation()         # change flag
-        self.UpdateFilter()         # update filter
+        self.changeNation()  # change flag
+        self.UpdateFilter()  # update filter
 
         # flag
         if doFlags:
+            with open(path_settings) as f:
+                data = json.load(f)
+            path = data["flags_path"]
             if self.nations.currentText() == "СССР":
-                self.nation.setPixmap(QPixmap("DB/image/flags/USSR_flag.png"))
+                path += "USSR_flag.png"
             elif self.nations.currentText() == "США":
-                self.nation.setPixmap(QPixmap("DB/image/flags/USA_flag.png"))
+                path += "USA_flag.png"
             elif self.nations.currentText() == "Германия":
-                self.nation.setPixmap(QPixmap("DB/image/flags/GERM_flag.png"))
+                path += "GERM_flag.png"
             else:
-                self.nation.setPixmap(QPixmap())
+                path = ""
                 self.nation.setText("Нация")
+            self.nation.setPixmap(QPixmap(path))
 
     # change nation
     def changeNation(self):
         # flag
         if doFlags:
+            self.nation.setText("Нация")
+            with open(path_settings) as f:
+                data = json.load(f)
+            path = data["flags_path"]
             if self.nations.currentText() == "СССР":
-                self.nation.setPixmap(QPixmap("DB/image/flags/USSR_flag.png"))
+                path += "USSR_flag.png"
             elif self.nations.currentText() == "США":
-                self.nation.setPixmap(QPixmap("DB/image/flags/USA_flag.png"))
+                path += "USA_flag.png"
             elif self.nations.currentText() == "Германия":
-                self.nation.setPixmap(QPixmap("DB/image/flags/GERM_flag.png"))
+                path += "GERM_flag.png"
             else:
-                self.nation.setPixmap(QPixmap())
-                self.nation.setText("Нация")
+                path = ""
+            self.nation.setPixmap(QPixmap(path))
 
     # check all CHB
     def chacked_all(self, state, who):
@@ -202,7 +229,7 @@ class MainProgramm(QMainWindow):
         self.all_LVL = [self.rbtn_lvl_all, self.chb_lvl_1, self.chb_lvl_2, self.chb_lvl_3,
                         self.chb_lvl_4, self.chb_lvl_5, self.chb_lvl_6, self.chb_lvl_7]
         self.all_TYPE = [self.rbtn_type_all, self.chb_type_lt, self.chb_type_st, self.chb_type_tt,
-                         self.chb_type_ptsay, self.chb_type_it, self.chb_type_zsu, self.chb_type_zprk_zrk,]
+                         self.chb_type_ptsay, self.chb_type_it, self.chb_type_zsu, self.chb_type_zprk_zrk, ]
 
         # set Checked CHB (Prime/Polk)
         self.chb_primet.setChecked(PrimeT)
@@ -234,10 +261,8 @@ class MainProgramm(QMainWindow):
 
     # func. load SetUP
     def open_LoadDialog(self):
-        global path_SetUP_file  # take global path
-        global log_file  # take logFile
-
-        print("class MainProgramm > def open_LoadDialog  -  load...") if DebugMod else print()  # debug
+        # debug
+        print("class MainProgramm > def open_LoadDialog  -  load...") if DebugMod else print()
 
         # write in log
         with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log
@@ -249,13 +274,11 @@ class MainProgramm(QMainWindow):
 
         # check correction
         if path_SetUP_file[-9:] == "_DBWTR.db":
-            # open settings
-            file = open(path_settings, encoding="utf-8", mode="w")
-            lines.pop(4)  # delete previous path
-            lines.insert(4, path_SetUP_file)  # insert new path
-            for i in lines:
-                print(i, file=file)
-            file.close()
+            with open(path_settings) as s:
+                data = json.load(s)
+                data["SetUP_path"] = path_SetUP_file
+                with open(path_settings, "w") as s:
+                    json.dump(data, s, indent=4)
 
             # debug
             print("class MainProgramm > def open_LoadDialog  -  load success") if DebugMod else print()  # debug
@@ -270,12 +293,14 @@ class MainProgramm(QMainWindow):
             # Failed message
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
+            if DarkTheme:
+                msg.setStyleSheet("background-color: rgb(25, 0, 97);" "color: rgb(255, 255, 255);")
             msg.setText("Укажите файл правильного формата \nПример: FirstSETUP_DBWTR.db")
             msg.setWindowTitle("Ошибка")
             msg.exec_()
 
-            print(
-                "class MainProgramm > def open_LoadDialog  -  load failed(bed format)") if DebugMod else print()  # debug
+            # debug
+            print("class MainProgramm > def open_LoadDialog  -  load failed(bed format)") if DebugMod else print()
 
             # write in log
             with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log as log_file:
@@ -283,37 +308,20 @@ class MainProgramm(QMainWindow):
 
     # close Event
     def closeEvent(self, event):
-        global log_file  # take logFile
-        global path_settings
+        # save Filter to Settings.json
+        with open(path_settings) as s:
+            data = json.load(s)
+            data["Nation"] = self.nations.currentText()
+            data['PrimeT'] = True if self.chb_primet.isChecked() else False
+            data['PolkT'] = True if self.chb_polkt.isChecked() else False
+            data["LVL"] = [True if i.isChecked() else False for i in self.all_LVL[1:]]
+            data["TYPE"] = [True if i.isChecked() else False for i in self.all_TYPE[1:]]
+            data["Number"] = int(self.numb.value())
+            with open(path_settings, "w") as s:
+                json.dump(data, s, indent=4)
 
-        # all CHB
-        all_lvl = [1 if i.isChecked() else 0 for i in self.all_LVL[1:]]
-        all_type = [1 if i.isChecked() else 0 for i in self.all_TYPE[1:]]
-
-        # open file
-        file = open(path_settings, encoding="utf-8")
-        lines = file.read().splitlines()
-        file.close()
-
-        # open and change settings
-        file = open(path_settings, encoding="utf-8", mode="w")
-        lines.pop(24)
-        lines.insert(24, str(1 if self.chb_primet.isChecked() else 0))
-        lines.pop(26)
-        lines.insert(26, str(1 if self.chb_polkt.isChecked() else 0))
-        lines.pop(28)
-        lines.insert(28, str(all_lvl))
-        lines.pop(30)
-        lines.insert(30, str(all_type))
-        lines.pop(32)
-        lines.insert(32, self.numb.value())
-        lines.pop(34)
-        lines.insert(34, self.nations.currentText())
-        for i in lines:
-            print(i, file=file)
-        file.close()
-
-        print("class MainProgramm > def closeEvent  -  settings changes") if DebugMod else print()  # debug
+        # debug
+        print("class MainProgramm > def closeEvent  -  settings changes") if DebugMod else print()
 
         # write in log
         with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log
@@ -334,8 +342,10 @@ class MainProgramm(QMainWindow):
         # check any parameter filter on
         if not (any(all_lvl) and any(all_type)):
             on = False
+            # Messege
             msg = QMessageBox()
-            msg.setStyleSheet("background-color: rgb(25, 0, 97);" "color: rgb(255, 255, 255);")
+            if DarkTheme:
+                msg.setStyleSheet("background-color: rgb(25, 0, 97);" "color: rgb(255, 255, 255);")
             msg.setIcon(QMessageBox.Warning)
             msg.setText("Пожалуйста!\nУкажите хотя бы один параметр(LVL, Тип техники)")
             msg.setWindowTitle("Ошибка!")
@@ -347,7 +357,7 @@ class MainProgramm(QMainWindow):
             # write in log
             with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log
                 print("WARNING class Main > def Random  -  note parameter", file=log_file)  # log
-            
+
         # connect to DB
         con = sqlite3.connect(path_SetUP_file)
         cur = con.cursor()
@@ -367,17 +377,21 @@ class MainProgramm(QMainWindow):
                 # error message
                 msg = QMessageBox()
                 msg.setIcon(QMessageBox.Warning)
-                msg.setStyleSheet("background-color: rgb(25, 0, 97);" "color: rgb(255, 255, 255);")
-                msg.setText("В выбранной нации этого SetUp'a нет технкики \nИЛИ\nВ выбранном SetUp'e нехватает технкики для подбора")
+                if DarkTheme:
+                    msg.setStyleSheet("background-color: rgb(25, 0, 97);" "color: rgb(255, 255, 255);")
+                msg.setText(
+                    "В выбранной нации этого SetUp'a нет технкики \nИЛИ\nВ выбранном SetUp'e нехватает технкики для подбора")
                 msg.setWindowTitle("Ошибка!")
                 msg.exec_()
 
                 # debug
-                print("WARNING class Main > def Random  -  not tech in SetUp or deficit tech for random") if DebugMod else print()
+                print(
+                    "WARNING class Main > def Random  -  not tech in SetUp or deficit tech for random") if DebugMod else print()
 
                 # write in log
                 with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log
-                    print("WARNING class Main > def Random  -  not tech in SetUp or deficit tech for random", file=log_file)  # log
+                    print("WARNING class Main > def Random  -  not tech in SetUp or deficit tech for random",
+                          file=log_file)  # log
 
         elif nation == "США" and on:
             for i in all_type:
@@ -392,8 +406,10 @@ class MainProgramm(QMainWindow):
                 # error message
                 msg = QMessageBox()
                 msg.setIcon(QMessageBox.Warning)
-                msg.setStyleSheet("background-color: rgb(25, 0, 97);" "color: rgb(255, 255, 255);")
-                msg.setText("В выбранной нации этого SetUp'a нет технкики \nИЛИ\nВ выбранном SetUp'e нехватает технкики для подбора")
+                if DarkTheme:
+                    msg.setStyleSheet("background-color: rgb(25, 0, 97);" "color: rgb(255, 255, 255);")
+                msg.setText(
+                    "В выбранной нации этого SetUp'a нет технкики \nИЛИ\nВ выбранном SetUp'e нехватает технкики для подбора")
                 msg.setWindowTitle("Ошибка!")
                 msg.exec_()
 
@@ -403,7 +419,8 @@ class MainProgramm(QMainWindow):
 
                 # write in log
                 with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log
-                    print("WARNING class Main > def Random  -  not tech in SetUp or deficit tech for random", file=log_file)  # log
+                    print("WARNING class Main > def Random  -  not tech in SetUp or deficit tech for random",
+                          file=log_file)  # log
 
         elif nation == "Германия" and on:
             for i in all_type:
@@ -412,14 +429,17 @@ class MainProgramm(QMainWindow):
                     self.res.extend(cur.execute(
                         """SELECT * FROM GERMANY_tanks WHERE type == ? AND lvl == ?;""", (i, i2)).fetchall())
             # check correcthin random
+
             if len(self.res) != 0 and numb <= len(self.res):
                 Result_Form(chb_prime, chb_polk, numb, self.res).exec()
             else:
                 # error message
                 msg = QMessageBox()
                 msg.setIcon(QMessageBox.Warning)
-                msg.setStyleSheet("background-color: rgb(25, 0, 97);" "color: rgb(255, 255, 255);")
-                msg.setText("В выбранной нации этого SetUp'a нет технкики \nИЛИ\nВ выбранном SetUp'e нехватает технкики для подбора")
+                if DarkTheme:
+                    msg.setStyleSheet("background-color: rgb(25, 0, 97);" "color: rgb(255, 255, 255);")
+                msg.setText(
+                    "В выбранной нации этого SetUp'a нет технкики \nИЛИ\nВ выбранном SetUp'e нехватает технкики для подбора")
                 msg.setWindowTitle("Ошибка!")
                 msg.exec_()
 
@@ -429,13 +449,15 @@ class MainProgramm(QMainWindow):
 
                 # write in log
                 with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log
-                    print("WARNING class Main > def Random  -  not tech in SetUp or deficit tech for random", file=log_file)  # log
+                    print("WARNING class Main > def Random  -  not tech in SetUp or deficit tech for random",
+                          file=log_file)  # log
 
         elif nation == "Не выбрано":
             # error message
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Warning)
-            msg.setStyleSheet("background-color: rgb(25, 0, 97);" "color: rgb(255, 255, 255);")
+            if DarkTheme:
+                msg.setStyleSheet("background-color: rgb(25, 0, 97);" "color: rgb(255, 255, 255);")
             msg.setText("Пожалуйста, укажите нацию ")
             msg.setWindowTitle("Ошибка!")
             msg.exec_()
@@ -459,8 +481,6 @@ class MainProgramm(QMainWindow):
 class Create_SetUP(QDialog):
     def __init__(self):
         super().__init__()
-        self.setWindowIcon(QtGui.QIcon("DB/image/logo.png"))
-
         # global
         global path_standartDB
         global CreateSetup_path
@@ -468,15 +488,27 @@ class Create_SetUP(QDialog):
         global doMoreInf
         global doFlags
 
-        # Window
+        # style Window
+        #logo
+        with open(path_settings) as f:
+            data = json.load(f)
+            self.setWindowIcon(QtGui.QIcon(data["logo_path"]))
+        # Ui
         uic.loadUi(CreateSetup_path, self)
         self.setWindowTitle('Создать SetUP')
+
+        # theme
+        if DarkTheme:
+            self.setStyleSheet("background-color: rgb(25, 0, 97); color: rgb(255, 255, 255);")
+            self.btn_saveAll.setStyleSheet(
+                "background-color: rgb(53, 0, 211);" "border-width: 2px;" "border-radius: 10px;")
+            self.nations.setStyleSheet(
+                "background-color: rgb(53, 0, 211);" "border-radius: 3px;" "padding: 1px 18px 1px 3px;" "min-width: 6em;")
 
         # staff
         self.all_chb = []  # all checkBox
         self.result = []  # result db
         self.c = False
-        # staff lists
         self.ussr = []
         self.usa = []
         self.germ = []
@@ -501,19 +533,26 @@ class Create_SetUP(QDialog):
 
         # creat checkbox's
         self.rbtn_all = QRadioButton("ВСЕ", self)  # crate radioBatton "all"
-        self.rbtn_all.setStyleSheet("background-color: rgb(36, 0, 144);")
+
+        # theme
+        if DarkTheme:
+            self.rbtn_all.setStyleSheet("background-color: rgb(36, 0, 144);" "padding: 2px;" "padding-left: 5px;")
+
+        # Create allaCHB
         self.rbtn_all.setVisible(False)  # make rbtn anVisible
         self.vbox.addWidget(self.rbtn_all)  # add in widget rbtn
         self.all_chb.append(self.rbtn_all)  # add in list rbtn
+        # CHB
         for i in range(1, 150):
             object = QCheckBox("chb_" + str(i))
             object.setVisible(False)
-            object.setStyleSheet("background-color: rgb(36, 0, 144);")
+            # theme
+            if DarkTheme:
+                object.setStyleSheet("background-color: rgb(36, 0, 144);" "padding: 2px;" "padding-left: 5px;")
             object.toggled.connect(self.save_nationToSetup)
             self.vbox.addWidget(object)
             self.all_chb.append(object)
         self.widget.setLayout(self.vbox)
-
         # add widget to scrollArea
         self.scrollArea_3.setWidget(self.widget)
 
@@ -521,15 +560,19 @@ class Create_SetUP(QDialog):
     def change_nationToCHB(self):
         # flag
         if doFlags:
+            with open(path_settings) as f:
+                data = json.load(f)
+            path = data["flags_path"]
             if self.nations.currentText() == "СССР":
-                self.nation.setPixmap(QPixmap("DB/image/flags/USSR_flag.png"))
+                path += "USSR_flag.png"
             elif self.nations.currentText() == "США":
-                self.nation.setPixmap(QPixmap("DB/image/flags/USA_flag.png"))
+                path += "USA_flag.png"
             elif self.nations.currentText() == "Германия":
-                self.nation.setPixmap(QPixmap("DB/image/flags/GERM_flag.png"))
+                path += "GERM_flag.png"
             else:
-                self.nation.setPixmap(QPixmap())
+                path = ""
                 self.nation.setText("Нация")
+            self.nation.setPixmap(QPixmap(path))
 
         # update all CHB
         for i in self.all_chb:
@@ -570,11 +613,11 @@ class Create_SetUP(QDialog):
             self.rbtn_all.setVisible(True)  # make rbtn Visible
             for key, i in enumerate(self.all_chb[1:len(self.result) + 1]):
                 i.setVisible(True)  # make CHB Visible
-                if doMoreInf:       # if MoreInformathion include:
+                if doMoreInf:  # if MoreInformathion include:
                     i.setText(f"{self.result[key][1]}"
                               f"\nТип - {self.result[key][2]} \t\tБр - {self.result[key][3]} \t\tЛВЛ - {self.result[key][4]}\n")
                 else:
-                    i.setText(str(self.result[key][1])) # if MoreInformathion not include:
+                    i.setText(str(self.result[key][1]))  # if MoreInformathion not include:
         self.all_chb[1].setChecked(True)
 
     # save nation to 1/3 SetUp'a
@@ -586,7 +629,8 @@ class Create_SetUP(QDialog):
                 if i.isChecked() == True:
                     self.ussr.append(i.text().split("\n")[0])
 
-            print("Ussr tanks - " + str(self.ussr)) if DebugMod else print()  # debug
+            # debug
+            print("Ussr tanks - " + str(self.ussr)) if DebugMod else print()
 
             # write in log
             with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log as log_file:
@@ -598,7 +642,8 @@ class Create_SetUP(QDialog):
                 if i.isChecked() == True:
                     self.germ.append(i.text().split("\n")[0])
 
-            print("Germany tanks - " + str(self.germ)) if DebugMod else print()  # debug
+            # debug
+            print("Germany tanks - " + str(self.germ)) if DebugMod else print()
 
             # write in log
             with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log as log_file:
@@ -610,7 +655,8 @@ class Create_SetUP(QDialog):
                 if i.isChecked() == True:
                     self.usa.append(i.text().split("\n")[0])
 
-            print("Usa tanks - " + str(self.usa)) if DebugMod else print()  # debug
+            # debug
+            print("Usa tanks - " + str(self.usa)) if DebugMod else print()
 
             # write in log
             with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log as log_file:
@@ -618,10 +664,8 @@ class Create_SetUP(QDialog):
 
     # func. save all
     def save_all(self):
-        global path_SetUP_file
-        global log_file_path
-
-        print("class Create_SetUP > def save_all  -  download...") if DebugMod else print()  # debug
+        # debug
+        print("class Create_SetUP > def save_all  -  download...") if DebugMod else print()
 
         # write in log
         with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log as log_file:
@@ -630,11 +674,16 @@ class Create_SetUP(QDialog):
         # try downLoad file
         try:
             f = open(r'DB/' + str(self.takeName.text()) + '_DBWTR.db', "wb")  # create file
-            ufr = requests.get("https://github.com/xskak228/WTR/blob/main/clean_DBWTR.db?raw=true")  # download file
+
+            # open settings,json
+            with open(path_settings) as file:
+                data = json.load(file)
+            ufr = requests.get(data["GitHubLink_clearDB"])  # download file
             f.write(ufr.content)  # write to file
             f.close()
 
-            print("class Create_SetUP > def save_all  -  success download!") if DebugMod else print()  # debug
+            # debug
+            print("class Create_SetUP > def save_all  -  success download!") if DebugMod else print()
 
             # write in log
             with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log as log_file:
@@ -643,34 +692,31 @@ class Create_SetUP(QDialog):
             # success message
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
-            msg.setStyleSheet("background-color: rgb(25, 0, 97);" "color: rgb(255, 255, 255);")
+            if DarkTheme:
+                msg.setStyleSheet("background-color: rgb(25, 0, 97);" "color: rgb(255, 255, 255);")
             msg.setText("Успешное создание SetUP'a !")
             msg.setWindowTitle("Успех")
             msg.exec_()
 
             path_SetUP_file = 'DB/' + str(self.takeName.text()) + '_DBWTR.db'  # name of "newDB"
 
-            # change path
-            file = open(path_settings, encoding="utf-8")
-            lines = file.read().splitlines()
-            file.close()
+            # change path in Settings.json
+            with open(path_settings) as f:
+                data = json.load(f)
+                data["SetUP_path"] = path_SetUP_file
+                with open(path_settings, "w") as f:
+                    json.dump(data, f, indent=4)
 
-            # open settings
-            file = open(path_settings, encoding="utf-8", mode="w")
-            lines.pop(4)  # delate previous path
-            lines.insert(4, path_SetUP_file)  # insert new path
-            for i in lines:
-                print(i, file=file)
-            file.close()
-
-            print("class Create_SetUP > def save_all  -  settings changes") if DebugMod else print()  # debug
+            # debug
+            print("class Create_SetUP > def save_all  -  settings changes") if DebugMod else print()
 
             # write in log
             with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log as log_file:
                 print("class Create_SetUP > def save_all  -  settings changes", file=log_file)  # log
 
         except Exception:
-            print("ERROR! class Create_SetUP > def save_all  -  download Failed") if DebugMod else print()  # debug
+            # debug
+            print("ERROR! class Create_SetUP > def save_all  -  download Failed") if DebugMod else print()
 
             # write in log
             with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log as log_file:
@@ -679,7 +725,8 @@ class Create_SetUP(QDialog):
             # failed message
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Warning)
-            msg.setStyleSheet("background-color: rgb(25, 0, 97);" "color: rgb(255, 255, 255);")
+            if DarkTheme:
+                msg.setStyleSheet("background-color: rgb(25, 0, 97);" "color: rgb(255, 255, 255);")
             msg.setText("Непредвиденная ошибка!")
             msg.setInformativeText('Проверьте подключение к Интернету')
             msg.setWindowTitle("Ошибка")
@@ -693,14 +740,15 @@ class Create_SetUP(QDialog):
         cur2 = con2.cursor()
 
         # addtanks
-        print(self.ussr)
+        with open(path_settings) as f:
+            data = json.load(f)
         if len(self.ussr) != 0:
             for i in self.ussr:
                 result = cur2.execute("""SELECT * FROM USSR_tanks WHERE name == ?;""",
                                       (i,)).fetchall()  # take all USSR tanks
                 result = list(result[0]) if len(result) != 0 else []
                 cur1.execute("""INSERT INTO USSR_tanks(id,name,type,lvl,BR,link) VALUES(?,?,?,?,?,?)""",
-                             (result[0], result[1], result[2], result[3], result[4], result[5],))
+                             (result[0], result[1], result[2], result[3], result[4], result[5]),)
 
         if len(self.usa) != 0:
             for i in self.usa:
@@ -708,15 +756,14 @@ class Create_SetUP(QDialog):
                                       (i,)).fetchall()  # take all USA tanks
                 result = list(result[0]) if len(result) != 0 else []
                 cur1.execute("""INSERT INTO USA_tanks(id,name,type,lvl,BR,link) VALUES(?,?,?,?,?,?)""",
-                             (result[0], result[1], result[2], result[3], result[4], result[5],))
-
+                             (result[0], result[1], result[2], result[3], result[4], result[5]),)
         if len(self.germ) != 0:
             for i in self.germ:
                 result = cur2.execute("""SELECT * FROM GERMANY_tanks WHERE name == ?;""",
                                       (i,)).fetchall()  # take all GERMANY tanks
                 result = list(result[0]) if len(result) != 0 else []
                 cur1.execute("""INSERT INTO GERMANY_tanks(id,name,type,lvl,BR,link) VALUES(?,?,?,?,?,?)""",
-                             (result[0], result[1], result[2], result[3], result[4], result[5],))
+                             (result[0], result[1], result[2], result[3], result[4], result[5]),)
 
         # disconect DB
         con1.commit()
@@ -729,18 +776,36 @@ class Create_SetUP(QDialog):
 class Settings_Form(QDialog):
     def __init__(self):
         super().__init__()
-        # Window
+        # global
         global SettingsForm_path
         global log_file_path
+        global path_settings
+        global doFlags
+
+        # stye Window
+        # load logo
+        with open(path_settings) as f:
+            data = json.load(f)
+            self.setWindowIcon(QtGui.QIcon(data["logo_path"]))
+        # UI
         uic.loadUi(SettingsForm_path, self)
         self.setWindowTitle('Настройки')
-        self.setWindowIcon(QtGui.QIcon("DB/image/logo.png"))
+
+        # Theme
+        if DarkTheme:
+            self.setStyleSheet("background-color: rgb(25, 0, 97); color: rgb(255, 255, 255);")
+            for i in [self.btn_dloud, self.tBtn_SetUP, self.tBtn_StandartDB]:
+                i.setStyleSheet(
+                    "background-color: rgb(53, 0, 211);" "border-width: 2px;" "border-radius: 10px;")
+            for i in [self.chb_FlagVisible, self.chb_doMoreInf, self.chb_theme]: i.setStyleSheet("background-color:rgb(36, 0, 144)")
 
         # options
         self.tBtn_StandartDB.clicked.connect(self.Update_StandartDB)
         self.tBtn_SetUP.clicked.connect(self.Update_SetUP)
         self.chb_FlagVisible.toggled.connect(lambda state: self.Flags(state))
         self.chb_doMoreInf.toggled.connect(lambda state: self.MoreINF(state))
+        self.chb_theme.setChecked(DarkTheme)
+        self.chb_theme.toggled.connect(lambda state: self.SwichTheme(state))
 
         # download DB
         self.btn_dloud.clicked.connect(self.Download_DB)
@@ -751,14 +816,40 @@ class Settings_Form(QDialog):
         self.chb_FlagVisible.setChecked(doFlags)
         self.chb_doMoreInf.setChecked(doMoreInf)
 
-        self.l_theme.setPixmap(QPixmap("DB/image/moon.svg"))
+    # SwichTheme
+    def SwichTheme(self, state):
+        global DarkTheme
+
+        # success message
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        if DarkTheme:
+            msg.setStyleSheet("background-color: rgb(25, 0, 97);" "color: rgb(255, 255, 255);")
+        msg.setText("Успех")
+        msg.setInformativeText('Настройки Темы вступят в силу после перезапуска программы или ее окон')
+        msg.setWindowTitle("Успех")
+        msg.exec_()
+
+        DarkTheme = state
+        with open(path_settings) as f:
+            data = json.load(f)
+            data["Theme"] = state
+            with open(path_settings, "w") as f:
+                json.dump(data, f, indent=4)
+
+        # debug
+        print("Theme State  -  " + str(state)) if DebugMod else print()
+        print("class Settings_Form > def SwichTheme  -  settings changes") if DebugMod else print()
+
+        # write in log
+        with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log as log_file:
+            print("Theme State  -  " + str(state), file=log_file)
+            print("class Settings_Form > def SwichTheme  -  settings changes", file=log_file)  # log
 
     # flags
     def Flags(self, state):
-        global doFlags
-        global log_file_path
-
-        print("Flag State  -  " + str(state)) if DebugMod else print()  # debug
+        # debug
+        print("Flag State  -  " + str(state)) if DebugMod else print()
 
         # write in log
         with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log as log_file:
@@ -766,15 +857,15 @@ class Settings_Form(QDialog):
 
         doFlags = state
 
-        # open settings
-        file = open(path_settings, encoding="utf-8", mode="w")
-        lines.pop(16)  # delete previous path
-        lines.insert(16, "1" if doFlags else "0")  # insert new path
-        for i in lines:
-            print(i, file=file)
-        file.close()
+        # cahnge flagState in Setting.json
+        with open(path_settings) as f:
+            data = json.load(f)
+            data["Flags"] = doFlags
+            with open(path_settings, "w") as f:
+                json.dump(data, f, indent=4)
 
-        print("class Settings_Form > def Flags  -  settings changes") if DebugMod else print()  # debug
+        # debug
+        print("class Settings_Form > def Flags  -  settings changes") if DebugMod else print()
 
         # write in log
         with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log as log_file:
@@ -785,7 +876,8 @@ class Settings_Form(QDialog):
         global doMoreInf
         global log_file_path
 
-        print("MoreInf State  -  " + str(state)) if DebugMod else print()  # debug
+        # debug
+        print("MoreInf State  -  " + str(state)) if DebugMod else print()
 
         # write in log
         with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log as log_file:
@@ -793,15 +885,15 @@ class Settings_Form(QDialog):
 
         doMoreInf = state
 
-        # open settings
-        file = open(path_settings, encoding="utf-8", mode="w")
-        lines.pop(18)  # delete previous path
-        lines.insert(18, "1" if doMoreInf else "0")  # insert new path
-        for i in lines:
-            print(i, file=file)
-        file.close()
+        # change MoreInf State in settings.json
+        with open(path_settings) as f:
+            data = json.load(f)
+            data["MoreInf"] = doMoreInf
+            with open(path_settings, "w") as f:
+                json.dump(data, f, indent=4)
 
-        print("class Settings_Form > def MoreINF  -  settings changes") if DebugMod else print()  # debug
+        # debug
+        print("class Settings_Form > def MoreINF  -  settings changes") if DebugMod else print()
 
         # write in log
         with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log as log_file:
@@ -809,30 +901,20 @@ class Settings_Form(QDialog):
 
     # update path of StandartDB
     def Update_StandartDB(self):
-        # open setting
-        global path_settings
-        global log_file_path
-        global path_standartDB  # take global path
-
-        # open file
-        file = open(path_settings, encoding="utf-8")
-        lines = file.read().splitlines()
-        file.close()
-
         # load file
         path_standartDB = QFileDialog.getOpenFileName(self, 'Выбрать SetUp', '',
                                                       'SetUp (*.db);;DataBase (*.db);;Все файлы (*)')[0]
         self.Path_standartBD.setText(str(path_standartDB))  # change path
 
-        # open settings
-        file = open(path_settings, encoding="utf-8", mode="w")
-        lines.pop(2)  # delate previous path
-        lines.insert(2, path_standartDB)  # insert new path
-        for i in lines:
-            print(i, file=file)
-        file.close()
+        # change path in setting.json
+        with open(path_settings) as f:
+            data = json.load(f)
+            data["standartDB_path"] = path_standartDB
+            with open(path_settings, "w") as f:
+                json.dump(data, f, indent=4)
 
-        print("class Settings_Form > def Update_StandartDB  -  settings changes") if DebugMod else print()  # debug
+        # debug
+        print("class Settings_Form > def Update_StandartDB  -  settings changes") if DebugMod else print()
 
         # write in log
         with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log as log_file:
@@ -841,29 +923,21 @@ class Settings_Form(QDialog):
     # update path of StandartDB
     def Update_SetUP(self):
         global log_file  # take logFile
-        global log_file_path
-        global path_settings
-        global path_SetUP_file  # take global path
-
-        # open settings
-        file = open(path_settings, encoding="utf-8")
-        lines = file.read().splitlines()
-        file.close()
 
         # laod file
         path_SetUP_file = QFileDialog.getOpenFileName(self, 'Выбрать SetUp', "",
                                                       'SetUp (*.db);;DataBase (*.db);;Все файлы (*)')[0]
         self.Path_SetUP.setText(str(path_SetUP_file))  # change path
 
-        # open settings
-        file = open(path_settings, encoding="utf-8", mode="w")
-        lines.pop(4)  # delete previous path
-        lines.insert(4, path_SetUP_file)  # insert new path
-        for i in lines:
-            print(i, file=file)
-        file.close()
+        # change path in setting.json
+        with open(path_settings) as f:
+            data = json.load(f)
+            data["SetUP_path"] = path_standartDB
+            with open(path_settings, "w") as f:
+                json.dump(data, f, indent=4)
 
-        print("class Settings_Form > def Update_SetUP  -  settings changes") if DebugMod else print()  # debug
+        # debug
+        print("class Settings_Form > def Update_SetUP  -  settings changes") if DebugMod else print()
 
         # write in log
         with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log as log_file:
@@ -871,11 +945,8 @@ class Settings_Form(QDialog):
 
     # download StandartDataBase
     def Download_DB(self):
-        global path_standartDB
-        global path_settings
-        global log_file_path
-
-        print("class Settings_Form > def Download_DB  -  download...") if DebugMod else print()  # debug
+        # debug
+        print("class Settings_Form > def Download_DB  -  download...") if DebugMod else print()
 
         # write in log
         with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log as log_file:
@@ -884,14 +955,19 @@ class Settings_Form(QDialog):
         # try downLoad file
         try:
             f = open(r'DB/standart_DBWTR.db', "wb")  # create file
-            ufr = requests.get("https://github.com/xskak228/WTR/blob/main/standart_DBWTR.db?raw=true")  # download file
+
+            # take GH link to downLoad file
+            with open(path_settings) as file:
+                data = json.load(file)
+            ufr = requests.get(data["GitHubLink_standartDB"])  # download file
             f.write(ufr.content)  # write to file
             f.close()
 
             # update path
             path_standartDB = 'DB/standart_DBWTR.db'
 
-            print("class Settings_Form > def Download_DB  -  success download!") if DebugMod else print()  # debug
+            # debug
+            print("class Settings_Form > def Download_DB  -  success download!") if DebugMod else print()
 
             # write in log
             with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log as log_file:
@@ -900,34 +976,32 @@ class Settings_Form(QDialog):
             # success message
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
-            msg.setStyleSheet("background-color: rgb(25, 0, 97);" "color: rgb(255, 255, 255);")
+            # theme
+            if DarkTheme:
+                msg.setStyleSheet("background-color: rgb(25, 0, 97);" "color: rgb(255, 255, 255);")
             msg.setText("Успешное скачивание!")
             msg.setWindowTitle("Успех")
             msg.exec_()
 
-            # change path
-            file = open(path_settings, encoding="utf-8")
-            lines = file.read().splitlines()
-            file.close()
+            # change path in setting.json
+            with open(path_settings) as f:
+                data = json.load(f)
+                data["standartDB_path"] = path_standartDB
+                with open(path_settings, "w") as f:
+                    json.dump(data, f, indent=4)
 
             self.Path_standartBD.setText(str(path_standartDB))  # change path
 
-            # open settings
-            file = open(path_settings, encoding="utf-8", mode="w")
-            lines.pop(2)  # delate previous path
-            lines.insert(2, path_standartDB)  # insert new path
-            for i in lines:
-                print(i, file=file)
-            file.close()
-
-            print("class Settings_Form > def Download_DB  -  settings changes") if DebugMod else print()  # debug
+            # debug
+            print("class Settings_Form > def Download_DB  -  settings changes") if DebugMod else print()
 
             # write in log
             with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log as log_file:
                 print("class Settings_Form > def Download_DB  -  settings changes", file=log_file)  # log
 
         except Exception:
-            print("ERROR! class Settings > def Download_DB  -  download Failed") if DebugMod else print()  # debug
+            # debug
+            print("ERROR! class Settings > def Download_DB  -  download Failed") if DebugMod else print()
 
             # write in log
             with open(log_file_path, "a", encoding="utf-8") as log_file:  # write in log as log_file:
@@ -937,7 +1011,9 @@ class Settings_Form(QDialog):
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Warning)
             msg.setText("Непредвиденная ошибка!")
-            msg.setStyleSheet("background-color: rgb(25, 0, 97);" "color: rgb(255, 255, 255);")
+            # theme
+            if DarkTheme:
+                msg.setStyleSheet("background-color: rgb(25, 0, 97);" "color: rgb(255, 255, 255);")
             msg.setInformativeText('Проверьте подключение к Интернету')
             msg.setWindowTitle("Ошибка")
             msg.exec_()
@@ -947,8 +1023,21 @@ class Settings_Form(QDialog):
 class Result_Form(QDialog):
     def __init__(self, chb_prime, chb_polk, numb, res):
         super().__init__()
-        self.setWindowIcon(QtGui.QIcon("DB/image/logo.png"))
-        uic.loadUi("UI\Result.ui", self)
+        # global
+        global ResultForm_path
+
+        # style Window
+        # load logo
+        with open(path_settings) as f:
+            data = json.load(f)
+            self.setWindowIcon(QtGui.QIcon(data["logo_path"]))
+        #UI
+        uic.loadUi(ResultForm_path, self)
+        self.windowTitle('Результаты')
+        # theme
+        if DarkTheme:
+            self.setStyleSheet("background-color:rgb(36, 0, 144)")
+
         # import filters an all tanks
         self.chb_prime = chb_prime
         self.chb_polk = chb_polk
@@ -958,9 +1047,9 @@ class Result_Form(QDialog):
         # import all tanks for filters(polk, prime
         self.links = [i[-1] for i in self.res]
         for i in self.links:
-            if i[9:11] == "@_" and not self.chb_polk:
+            if i[:2] == "@_" and not self.chb_polk:
                 self.links.remove(i)
-            elif i[9:11] == "$_" and not self.chb_prime:
+            elif i[:2] == "$_" and not self.chb_prime:
                 self.links.remove(i)
 
         # debug
@@ -989,12 +1078,15 @@ class Result_Form(QDialog):
             if r not in n:
                 n.append(r)
 
+        # loadpath
+        with open(path_settings) as f:
+            data = json.load(f)
+
         # SetPixmap for label
         for i in range(0, self.numb):
             link = n[i]
-            a[i].setPixmap(QPixmap(self.links[link - 1]))
+            a[i].setPixmap(QPixmap(str(data["ImageTank_path"]) + str(self.links[link - 1])))
             a[i].setVisible(True)
-
 
 
 if __name__ == '__main__':

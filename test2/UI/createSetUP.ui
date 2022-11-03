@@ -23,8 +23,7 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(25, 0, 97);
-color: rgb(255, 255, 255);</string>
+   <string notr="true"/>
   </property>
   <property name="sizeGripEnabled">
    <bool>false</bool>
@@ -73,7 +72,7 @@ color: rgb(255, 255, 255);</string>
         </property>
         <property name="minimumSize">
          <size>
-          <width>101</width>
+          <width>0</width>
           <height>0</height>
          </size>
         </property>
@@ -84,11 +83,7 @@ color: rgb(255, 255, 255);</string>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(53, 0, 211);
-border-radius: 3px;
-padding: 1px 18px 1px 3px;
-min-width: 6em;
-</string>
+         <string notr="true"/>
         </property>
         <property name="editable">
          <bool>false</bool>
@@ -132,9 +127,7 @@ min-width: 6em;
     <item>
      <widget class="QScrollArea" name="scrollArea_3">
       <property name="styleSheet">
-       <string notr="true">QScrollBar:horizontal {
-    background: #282828;
-}</string>
+       <string notr="true"/>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -200,10 +193,7 @@ min-width: 6em;
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(53, 0, 211);
-border-width: 2px;
-border-radius: 10px;
-</string>
+    <string notr="true"/>
    </property>
    <property name="text">
     <string>Сохранить Все</string>

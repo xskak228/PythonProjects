@@ -14,8 +14,7 @@
    <string>MainWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(25, 0, 97);
-color: rgb(255, 255, 255);</string>
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QWidget" name="layoutWidget">
@@ -74,7 +73,7 @@ color: rgb(255, 255, 255);</string>
          </property>
          <property name="minimumSize">
           <size>
-           <width>20</width>
+           <width>0</width>
            <height>0</height>
           </size>
          </property>
@@ -85,11 +84,7 @@ color: rgb(255, 255, 255);</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(53, 0, 211);
-border-radius: 3px;
-padding: 1px 18px 1px 3px;
-min-width: 6em;
-</string>
+          <string notr="true"/>
          </property>
          <property name="editable">
           <bool>false</bool>
@@ -133,7 +128,7 @@ min-width: 6em;
      <item>
       <widget class="Line" name="line">
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(36, 0, 144)</string>
+        <string notr="true"/>
        </property>
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
@@ -154,9 +149,7 @@ min-width: 6em;
        <item>
         <widget class="QCheckBox" name="chb_primet">
          <property name="styleSheet">
-          <string notr="true">background-color:rgb(36, 0, 144);
-padding: 2px;
-padding-left: 5px;</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>Премиум техн.</string>
@@ -169,9 +162,7 @@ padding-left: 5px;</string>
        <item>
         <widget class="QCheckBox" name="chb_polkt">
          <property name="styleSheet">
-          <string notr="true">background-color:rgb(36, 0, 144);
-padding: 2px;
-padding-left: 5px;</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>Полковая техн.</string>
@@ -224,9 +215,7 @@ padding-left: 5px;</string>
               <bool>false</bool>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color:rgb(36, 0, 144);
-padding: 2px;
-padding-left: 5px;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>ВСЕ</string>
@@ -236,9 +225,7 @@ padding-left: 5px;</string>
            <item>
             <widget class="QCheckBox" name="chb_lvl_1">
              <property name="styleSheet">
-              <string notr="true">background-color:rgb(36, 0, 144);
-padding: 2px;
-padding-left: 5px;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>I</string>
@@ -248,9 +235,7 @@ padding-left: 5px;</string>
            <item>
             <widget class="QCheckBox" name="chb_lvl_2">
              <property name="styleSheet">
-              <string notr="true">background-color:rgb(36, 0, 144);
-padding: 2px;
-padding-left: 5px;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>II</string>
@@ -260,9 +245,7 @@ padding-left: 5px;</string>
            <item>
             <widget class="QCheckBox" name="chb_lvl_3">
              <property name="styleSheet">
-              <string notr="true">background-color:rgb(36, 0, 144);
-padding: 2px;
-padding-left: 5px;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>III</string>
@@ -272,9 +255,7 @@ padding-left: 5px;</string>
            <item>
             <widget class="QCheckBox" name="chb_lvl_4">
              <property name="styleSheet">
-              <string notr="true">background-color:rgb(36, 0, 144);
-padding: 2px;
-padding-left: 5px;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>IV</string>
@@ -284,9 +265,7 @@ padding-left: 5px;</string>
            <item>
             <widget class="QCheckBox" name="chb_lvl_5">
              <property name="styleSheet">
-              <string notr="true">background-color:rgb(36, 0, 144);
-padding: 2px;
-padding-left: 5px;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>V</string>
@@ -296,9 +275,7 @@ padding-left: 5px;</string>
            <item>
             <widget class="QCheckBox" name="chb_lvl_6">
              <property name="styleSheet">
-              <string notr="true">background-color:rgb(36, 0, 144);
-padding: 2px;
-padding-left: 5px;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>VI</string>
@@ -308,9 +285,7 @@ padding-left: 5px;</string>
            <item>
             <widget class="QCheckBox" name="chb_lvl_7">
              <property name="styleSheet">
-              <string notr="true">background-color:rgb(36, 0, 144);
-padding: 2px;
-padding-left: 5px;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>VII</string>
@@ -348,9 +323,7 @@ padding-left: 5px;</string>
            <item>
             <widget class="QRadioButton" name="rbtn_type_all">
              <property name="styleSheet">
-              <string notr="true">background-color:rgb(36, 0, 144);
-padding: 2px;
-padding-left: 5px;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>ВСЕ</string>
@@ -360,9 +333,7 @@ padding-left: 5px;</string>
            <item>
             <widget class="QCheckBox" name="chb_type_lt">
              <property name="styleSheet">
-              <string notr="true">background-color:rgb(36, 0, 144);
-padding: 2px;
-padding-left: 5px;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>ЛТ</string>
@@ -372,9 +343,7 @@ padding-left: 5px;</string>
            <item>
             <widget class="QCheckBox" name="chb_type_st">
              <property name="styleSheet">
-              <string notr="true">background-color:rgb(36, 0, 144);
-padding: 2px;
-padding-left: 5px;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>СТ</string>
@@ -384,9 +353,7 @@ padding-left: 5px;</string>
            <item>
             <widget class="QCheckBox" name="chb_type_tt">
              <property name="styleSheet">
-              <string notr="true">background-color:rgb(36, 0, 144);
-padding: 2px;
-padding-left: 5px;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>ТТ</string>
@@ -396,9 +363,7 @@ padding-left: 5px;</string>
            <item>
             <widget class="QCheckBox" name="chb_type_ptsay">
              <property name="styleSheet">
-              <string notr="true">background-color:rgb(36, 0, 144);
-padding: 2px;
-padding-left: 5px;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>ПТ-САУ</string>
@@ -408,9 +373,7 @@ padding-left: 5px;</string>
            <item>
             <widget class="QCheckBox" name="chb_type_it">
              <property name="styleSheet">
-              <string notr="true">background-color:rgb(36, 0, 144);
-padding: 2px;
-padding-left: 5px;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>ИТ</string>
@@ -420,9 +383,7 @@ padding-left: 5px;</string>
            <item>
             <widget class="QCheckBox" name="chb_type_zsu">
              <property name="styleSheet">
-              <string notr="true">background-color:rgb(36, 0, 144);
-padding: 2px;
-padding-left: 5px;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>ЗСУ</string>
@@ -432,9 +393,7 @@ padding-left: 5px;</string>
            <item>
             <widget class="QCheckBox" name="chb_type_zprk_zrk">
              <property name="styleSheet">
-              <string notr="true">background-color:rgb(36, 0, 144);
-padding: 2px;
-padding-left: 5px;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>ЗПРК - ЗРК</string>
@@ -458,10 +417,7 @@ padding-left: 5px;</string>
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(53, 0, 211);
-border-width: 2px;
-border-radius: 10px;
-</string>
+          <string notr="true"/>
          </property>
          <property name="text">
           <string>СТАРТ</string>
@@ -477,7 +433,7 @@ border-radius: 10px;
           </size>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color:rgb(53, 0, 211);</string>
+          <string notr="true"/>
          </property>
          <property name="wrapping">
           <bool>false</bool>
@@ -510,7 +466,7 @@ border-radius: 10px;
      <item>
       <widget class="Line" name="line_2">
        <property name="styleSheet">
-        <string notr="true">background-color: rgb(36, 0, 144)</string>
+        <string notr="true"/>
        </property>
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
@@ -562,13 +518,7 @@ border-radius: 10px;
     <addaction name="separator"/>
     <addaction name="ach_exit"/>
    </widget>
-   <widget class="QMenu" name="help_menu">
-    <property name="title">
-     <string>&amp;Помошь</string>
-    </property>
-   </widget>
    <addaction name="file_menu"/>
-   <addaction name="help_menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="ach_save">
