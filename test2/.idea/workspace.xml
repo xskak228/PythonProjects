@@ -2,14 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="667e2175-6530-46c4-89f8-37ddcb16caba" name="Changes" comment="02.11.2022_17.58">
+      <change beforePath="$PROJECT_DIR$/../DB_WTR/test_DB.db" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DB/standart_DBWTR.db" beforeDir="false" afterPath="$PROJECT_DIR$/DB/standart_DBWTR.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DB/firstSetUp_DBWTR.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UI/SettingsForm.ui" beforeDir="false" afterPath="$PROJECT_DIR$/UI/SettingsForm.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UI/createSetUP.ui" beforeDir="false" afterPath="$PROJECT_DIR$/UI/createSetUP.ui" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/UI/test228.ui" beforeDir="false" afterPath="$PROJECT_DIR$/UI/test228.ui" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.cfg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/ideas.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/settings.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../test_DB.db" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +40,7 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;D:/IT/PycharmProjects/Random_WarThunder/01.py&quot;,

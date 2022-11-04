@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>339</width>
+    <width>392</width>
     <height>193</height>
    </rect>
   </property>
@@ -28,7 +28,7 @@
   <widget class="QToolButton" name="tBtn_StandartDB">
    <property name="geometry">
     <rect>
-     <x>310</x>
+     <x>365</x>
      <y>5</y>
      <width>25</width>
      <height>19</height>
@@ -42,11 +42,14 @@
    </property>
   </widget>
   <widget class="QLineEdit" name="Path_standartBD">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>92</x>
      <y>5</y>
-     <width>211</width>
+     <width>271</width>
      <height>20</height>
     </rect>
    </property>
@@ -65,11 +68,14 @@
    </property>
   </widget>
   <widget class="QLineEdit" name="Path_SetUP">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>92</x>
      <y>30</y>
-     <width>211</width>
+     <width>271</width>
      <height>20</height>
     </rect>
    </property>
@@ -93,7 +99,7 @@
   <widget class="QToolButton" name="tBtn_SetUP">
    <property name="geometry">
     <rect>
-     <x>310</x>
+     <x>365</x>
      <y>30</y>
      <width>25</width>
      <height>19</height>

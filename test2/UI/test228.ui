@@ -420,7 +420,7 @@
           <string notr="true"/>
          </property>
          <property name="text">
-          <string>СТАРТ</string>
+          <string>Сгенерировать</string>
          </property>
         </widget>
        </item>

@@ -196,7 +196,7 @@
     <string notr="true"/>
    </property>
    <property name="text">
-    <string>Сохранить Все</string>
+    <string>Сохранить</string>
    </property>
   </widget>
  </widget>

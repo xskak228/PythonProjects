@@ -13,7 +13,7 @@
     "Debug": true,
     "PrimeT": true,
     "PolkT": true,
-    "Theme": true,
+    "Theme": false,
     "LVL": [
         true,
         true,

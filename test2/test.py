@@ -782,7 +782,7 @@ class Settings_Form(QDialog):
         global path_settings
         global doFlags
 
-        # stye Window
+        # style Window
         # load logo
         with open(path_settings) as f:
             data = json.load(f)
