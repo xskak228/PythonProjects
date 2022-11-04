@@ -1033,7 +1033,7 @@ class Result_Form(QDialog):
             self.setWindowIcon(QtGui.QIcon(data["logo_path"]))
         #UI
         uic.loadUi(ResultForm_path, self)
-        self.windowTitle('Результаты')
+        self.setWindowTitle('Результаты')
         # theme
         if DarkTheme:
             self.setStyleSheet("background-color:rgb(36, 0, 144)")
@@ -1045,12 +1045,20 @@ class Result_Form(QDialog):
         self.res = res
 
         # import all tanks for filters(polk, prime
+        print(self.chb_polk)
+        print(self.chb_prime)
         self.links = [i[-1] for i in self.res]
+        self.links2 = []
         for i in self.links:
-            if i[:2] == "@_" and not self.chb_polk:
-                self.links.remove(i)
-            elif i[:2] == "$_" and not self.chb_prime:
-                self.links.remove(i)
+            if i[:1] == "@" and not self.chb_polk:
+                pass
+            elif i[:1] == "$" and not self.chb_prime:
+                pass
+            else:
+                self.links2.append(i)
+
+
+
 
         # debug
         print("class Result_Form > def Random  -  result links > " + str(self.res)) if DebugMod else print()
@@ -1074,7 +1082,7 @@ class Result_Form(QDialog):
 
         # random links
         while len(n) != self.numb:
-            r = random.randrange(1, len(self.links) + 1)
+            r = random.randrange(1, len(self.links2) + 1)
             if r not in n:
                 n.append(r)
 
@@ -1085,7 +1093,8 @@ class Result_Form(QDialog):
         # SetPixmap for label
         for i in range(0, self.numb):
             link = n[i]
-            a[i].setPixmap(QPixmap(str(data["ImageTank_path"]) + str(self.links[link - 1])))
+            a[i].setPixmap(QPixmap(str(data["ImageTank_path"]) + str(self.links2[link - 1])))
+            print(str(data["ImageTank_path"]) + str(self.links2[link - 1]))
             a[i].setVisible(True)
 
 
