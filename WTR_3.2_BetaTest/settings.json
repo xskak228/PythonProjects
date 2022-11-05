@@ -1,0 +1,39 @@
+{
+    "standartDB_path": "DB/standart_DBWTR.db",
+    "SetUP_path": "D:/IT/GitHub/PythonProjects/WTR/DB/standart_DBWTR.db",
+    "logo_path": "DB/image/logo/logo.png",
+    "flags_path": "DB/image/flags/",
+    "ImageTank_path": "DB/image/tanks/",
+    "UI_MainWindow_path": "UI/test228.ui",
+    "UI_CreateSetup_path": "UI/createSetUP.ui",
+    "UI_SettingsForm_path": "UI/SettingsForm.ui",
+    "UI_ResultForm_path": "UI/Result.ui",
+    "Flags": true,
+    "MoreInf": true,
+    "Debug": true,
+    "PrimeT": false,
+    "PolkT": false,
+    "Theme": true,
+    "LVL": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+    ],
+    "TYPE": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+    ],
+    "Number": 2,
+    "Nation": "\u0421\u0421\u0421\u0420",
+    "GitHubLink_clearDB": "https://github.com/xskak228/WTR/blob/main/clean_DBWTR.db?raw=true",
+    "GitHubLink_standartDB": "https://github.com/xskak228/WTR/blob/main/standart_DBWTR.db?raw=true"
+}

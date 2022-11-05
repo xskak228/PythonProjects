@@ -1,0 +1,14 @@
+Start program - 2022-11-05 23:13:38.676462
+DebugMod  -  True
+Flag State  -  True
+class Settings_Form > def Flags  -  settings changes
+MoreInf State  -  True
+class Settings_Form > def MoreINF  -  settings changes
+class Settings_Form > def Download_DB  -  download...
+class Settings_Form > def Download_DB  -  success download!
+class Settings_Form > def Download_DB  -  settings changes
+Flag State  -  True
+class Settings_Form > def Flags  -  settings changes
+MoreInf State  -  True
+class Settings_Form > def MoreINF  -  settings changes
+class Settings_Form > def Update_SetUP  -  settings changes
