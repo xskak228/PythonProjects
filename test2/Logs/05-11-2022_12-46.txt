@@ -1,0 +1,3 @@
+Start program - 2022-11-05 12:46:45.728040
+DebugMod  -  True
+Close programm - 2022-11-05 12:54:31.155423

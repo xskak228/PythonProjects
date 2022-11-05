@@ -1,6 +1,6 @@
 {
     "standartDB_path": "D:/IT/GitHub/PythonProjects/test2/DB/standart_DBWTR.db",
-    "SetUP_path": "D:/IT/GitHub/PythonProjects/test2/DB/standart_DBWTR.db",
+    "SetUP_path": "D:/IT/GitHub/PythonProjects/test2/DB/firstSetUp_DBWTR.db",
     "logo_path": "DB/image/logo/logo.png",
     "flags_path": "DB/image/flags/",
     "ImageTank_path": "DB/image/tanks/",
@@ -13,7 +13,7 @@
     "Debug": true,
     "PrimeT": false,
     "PolkT": false,
-    "Theme": false,
+    "Theme": true,
     "LVL": [
         true,
         true,
@@ -32,7 +32,7 @@
         true,
         true
     ],
-    "Number": 9,
+    "Number": 2,
     "Nation": "\u0421\u0421\u0421\u0420",
     "GitHubLink_clearDB": "https://github.com/xskak228/WTR/blob/main/clean_DBWTR.db?raw=true",
     "GitHubLink_standartDB": "https://github.com/xskak228/WTR/blob/main/standart_DBWTR.db?raw=true"

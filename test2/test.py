@@ -932,7 +932,7 @@ class Settings_Form(QDialog):
         # change path in setting.json
         with open(path_settings) as f:
             data = json.load(f)
-            data["SetUP_path"] = path_standartDB
+            data["SetUP_path"] = path_SetUP_file
             with open(path_settings, "w") as f:
                 json.dump(data, f, indent=4)
 

@@ -1,0 +1,7 @@
+Start program - 2022-11-05 13:53:27.756113
+DebugMod  -  True
+Flag State  -  True
+class Settings_Form > def Flags  -  settings changes
+MoreInf State  -  True
+class Settings_Form > def MoreINF  -  settings changes
+Close programm - 2022-11-05 13:55:24.180005
